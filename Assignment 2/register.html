@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="register-card">
+        <h1 class="Header" style="font-weight: bold;font-size: 2.2rem;margin-bottom: 40px;">Registration Form</h1>
+
+        <form class="registration-form">
+            <div class="row">
+                <label>Roll no. :</label>
+                <input type="text" required>
+            </div>
+
+            <div class="row">
+                <label>Name :</label>
+                <div class="input-group">
+                    <input type="text" placeholder="First Name" required>
+                    <span style="align-self: center;">-</span>
+                    <input type="text" placeholder="Last Name" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <label>Father's name :</label>
+                <input type="text" required>
+            </div>
+
+            <div class="row">
+                <label>Date of birth :</label>
+                <div class="input-group">
+                    <input type="text" placeholder="Day" style="width: 70px; flex: none;" required>
+                    <span style="align-self: center;">-</span>
+                    <input type="text" placeholder="Month" style="width: 70px; flex: none;" required>
+                    <span style="align-self: center;">-</span>
+                    <input type="text" placeholder="Year" style="width: 100px; flex: none;" required>
+                    <span style="align-self: center; font-style: italic; margin-left: 10px;">(DD-MM-YYYY)</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <label>Mobile no. :</label>
+                <div class="input-group">
+                    <input type="text" value="+91" style="width: 50px; flex: none; text-align: center;" readonly>
+                    <span style="align-self: center;">-</span>
+                    <input type="tel" required pattern="[0-9]{10}" title="10 digit mobile number">
+                </div>
+            </div>
+
+            <div class="row">
+                <label>Email id :</label>
+                <input type="email" required>
+            </div>
+
+            <div class="row">
+                <label>Password :</label>
+                <input type="password" required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}"
+                    title="Must include uppercase, lowercase, number, and special character">
+            </div>
+
+            <div class="row">
+                <label>Gender :</label>
+                <div class="radio-group" style="font-family: serif; font-size: 1.1rem; flex: 1; margin-bottom: 0;">
+                    <input type="radio" name="gender" required style="width: auto; margin-bottom: 0;"> Male
+                    <input type="radio" name="gender" required style="width: auto; margin-bottom: 0;"> Female
+                </div>
+            </div>
+
+            <div class="row">
+                <label>Department :</label>
+                <div class="checkbox-group" style="font-size: 1.1rem; flex: 1; margin-bottom: 0;">
+                    <input type="radio" name="dept" required style="width: auto; margin-bottom: 0;"> CSE
+                    <input type="radio" name="dept" style="width: auto; margin-bottom: 0;"> IT
+                    <input type="radio" name="dept" style="width: auto; margin-bottom: 0;"> ECE
+                    <input type="radio" name="dept" style="width: auto; margin-bottom: 0;"> Civil
+                    <input type="radio" name="dept" style="width: auto; margin-bottom: 0;"> Mech
+                </div>
+            </div>
+
+
+            <div class="row">
+                <label>Course :</label>
+                <select required>
+                    <option value="">------------------------------------Select Current Course's --------------------------</option>
+                    <option value="btech">B.Tech</option>
+                    <option value="mtech">M.Tech</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <label>Student photo :</label>
+                <input type="file" required
+                    style="border: none; background: transparent; padding: 0; width: auto; flex: none;">
+            </div>
+
+            <div class="row">
+                <label>City :</label>
+                <input type="text" required>
+            </div>
+
+            <div class="row">
+                <label>Address :</label>
+                <textarea rows="4" required></textarea>
+            </div>
+
+            <div class="row" style="justify-content: center; margin-top: 30px;">
+                <button type="submit"
+                    style="width: auto; padding: 5px 15px; background: #eee; color: black; border: 1px solid #aaa; margin-bottom: 0;">Register</button>
+            </div>
+        </form>
+    </div>
+    <div class="footer_register">
+        Already a member? <a href="index.htm">Login Here</a>
+    </div>
+
+</body>
+
+</html>

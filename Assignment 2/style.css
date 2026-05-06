@@ -1,0 +1,153 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    background-color: darkgray;
+}
+
+.login-card {
+    width: 350px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    overflow: hidden;
+}
+
+.Header,
+.login-form {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.Header {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+input {
+    width: 100%;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 12px 25px;
+    cursor: pointer;
+}
+
+button {
+    width: 100%;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: lightblue;
+}
+
+.footer {
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+    background-color: #ddd;
+    width: 100%;
+    color: grey;
+    border-top: 1px solid #ccc;
+}
+
+.register-card {
+    background-color: #ffe4e1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 700px;
+    padding-top: 40px;
+    padding-left: 10px;
+    border-radius: 8px;
+    margin: 50px auto;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 0px 15px 15px 0px;
+}
+
+.row label {
+    width: 200px;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+
+.radio-group,
+.checkbox-group {
+    display: flex;
+    gap: 15px;
+}
+
+select {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.registration-form button {
+    width: auto;
+    padding: 10px 40px;
+    background-color: #5dade2;
+    color: white;
+    font-weight: bold;
+    margin: 10px auto;
+}
+
+.registration-form input[type="text"],
+.registration-form input[type="email"],
+.registration-form input[type="password"],
+.registration-form input[type="tel"],
+.registration-form select,
+.registration-form textarea {
+    flex: 1;
+    margin-bottom: 0;
+    padding: 8px 12px;
+}
+
+.registration-form .input-group {
+    flex: 1;
+}
+
+.registration-form .input-group input {
+    flex: 1;
+}
+.footer_register {
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+    background-color: #ddd;
+    width: 100%;
+    color: grey;
+    border-top: 1px solid #ccc;
+}
