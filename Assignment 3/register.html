@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Registration Form</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+
+    <style>
+      body {
+        background-color: grey;
+      }
+      .box {
+        width: 700px;
+        margin: 30px auto;
+        padding: 15px;
+        background: #d89dc2;
+        border-radius: 5px;
+      }
+      .btn {
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin-left: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <h2 class="text-center">Registration Form</h2>
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-3">Roll No:</label>
+          <div class="col-sm-9">
+            <input
+              type="number"
+              class="form-control"
+              min="5"
+              max="15"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3">Name:</label>
+          <div
+            class="col-sm-9"
+            style="display: flex; align-items: center; gap: 10px"
+          >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="First Name"
+              required
+            />
+            <span>-</span>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Last Name"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3">Father's Name:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3">Date of Birth:</label>
+          <div class="col-sm-9">
+            <input type="date" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3">Mobile No:</label>
+          <div class="col-sm-9" style="display: flex; gap: 10px">
+            <input
+              type="text"
+              value="+91"
+              class="form-control"
+              style="width: 80px"
+              readonly
+            />
+            <span style="align-self: center">-</span>
+            <input type="tel" class="form-control" placeholder="Enter number" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3">Email ID:</label>
+          <div class="col-sm-9">
+            <input type="email" class="form-control" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3">Password:</label>
+          <div class="col-sm-9">
+            <input
+              type="password"
+              class="form-control"
+              required
+              pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}"
+              title="Must include uppercase, lowercase, number, and special character"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3">Gender:</label>
+          <div class="col-sm-9">
+            <label class="radio-inline"
+              ><input type="radio" name="gender" /> Male</label
+            >
+            <label class="radio-inline"
+              ><input type="radio" name="gender" /> Female</label
+            >
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3">Department:</label>
+          <div class="col-sm-9">
+            <label class="radio-inline"
+              ><input type="radio" name="dept" /> CSE</label
+            >
+            <label class="radio-inline"
+              ><input type="radio" name="dept" /> IT</label
+            >
+            <label class="radio-inline"
+              ><input type="radio" name="dept" /> ECE</label
+            >
+            <label class="radio-inline"
+              ><input type="radio" name="dept" /> Civil</label
+            >
+            <label class="radio-inline"
+              ><input type="radio" name="dept" /> Mech</label
+            >
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3">Course:</label>
+          <div class="col-sm-9">
+            <select class="form-control">
+              <option>--Select Current Course--</option>
+              <option>B.Tech</option>
+              <option>M.Tech</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3">Photo:</label>
+          <div class="col-sm-9">
+            <input type="file" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3">City:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3">Address:</label>
+          <div class="col-sm-9">
+            <textarea class="form-control"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-9">
+            <input type="submit" value="Register" class="btn btn-success" />
+          </div>
+        </div>
+      </form>
+      <div class="text-center" style="padding-right: 20px;">
+        Already a member? <a href="index.html">Login Here</a>
+      </div>
+    </div>
+  </body>
+</html>

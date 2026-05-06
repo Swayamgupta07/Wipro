@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<style>
+    body {
+        background-color: grey;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+    }
+
+    .box {
+        background-color: #fff;
+        padding: 40px;
+        border: 3px solid black;
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .box h2 {
+        text-align: center;
+    }
+
+    .form-control {
+        width: 100%;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+   .footer {
+    text-align: center;
+    background-color: #ddd;
+    color: grey;
+    border-top: 1px solid #ccc;
+    padding: 0px 48px 0px 48px;
+    }
+
+    .btn-primary {
+        border-color: crimson;
+        color: white;
+        margin-top:15px;
+    }
+</style>
+<body>
+<div class="box">
+    <h2>Login</h2>
+    <form>
+        <input type="text" class="form-control" placeholder="Username" required minlength="3" pattern="[a-zA-Z]+"><br>
+        <input type="email" class="form-control" placeholder="Email" required><br>
+
+        <button class="btn btn-primary btn-block">LOGIN</button>
+    </form>
+</div>
+<div class="footer">Not a Member? <a href="register.html">Register Here</a></div>
+
+</body>
+</html>
