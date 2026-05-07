@@ -11,7 +11,7 @@ studentForm.addEventListener('submit', function(event) {
     const student = {
         id: Date.now(),
         name: document.getElementById('studentName').value,
-        email: document.getElementById('studentEmail').value,
+        address: document.getElementById('studentAddress').value,
         batch: document.getElementById('studentBatch').value
     };
 
@@ -35,7 +35,7 @@ function renderStudents() {
                 <div>
                     <h4 style="margin: 0; color: #000;">${student.name}</h4>
                     <div style="font-size: 13px; color: #444; margin-top: 2px;">
-                        <span>${student.email}</span> | <span>Batch: ${student.batch}</span>
+                        <span>${student.address}</span> | <span>Batch: ${student.batch}</span>
                     </div>
                 </div>
                 <button type="button" class="btn btn-danger btn-sm" onclick="deleteStudent(${student.id})" style="flex: none; padding: 2px 8px; font-size: 11px; line-height: 1.5; width: auto; height: auto;">Delete</button>
@@ -49,6 +49,8 @@ function renderStudents() {
 }
 
 function deleteStudent(id) {
-    students = students.filter(s => s.id !== id);
-    renderStudents();
+    if (confirm("Are you sure you want to delete this student?")) {
+        students = students.filter(s => s.id !== id);
+        renderStudents();
+    }
 }
