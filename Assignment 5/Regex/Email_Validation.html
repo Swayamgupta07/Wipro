@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Email Validation</h2>
+
+      <div class="section">
+        <div class="input-group">
+          <input
+            type="email"
+            id="Email"
+            placeholder="Enter Email (example@gmail.com)"
+          />
+          <button onclick="checkEmail()">Validate</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="input-group">
+          <input
+            type="password"
+            id="Password"
+            placeholder="Enter Password (8+ chars)"
+          />
+          <button onclick="checkPassword()">Validate</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="input-group">
+          <input
+            type="text"
+            id="Phone"
+            placeholder="Enter Mobile (10 digits)"
+          />
+          <button onclick="checkMobile()">Validate</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="input-group">
+          <input
+            type="text"
+            id="Extract"
+            placeholder="Enter String (Order123...)"
+          />
+          <button onclick="checkNumber()">Extract</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="input-group">
+          <input
+            type="text"
+            id="textnumber"
+            placeholder="Enter String with Spaces"
+          />
+          <button onclick="replaceSpaces()">Replace</button>
+        </div>
+      </div>
+
+<div id="output" class="result"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
