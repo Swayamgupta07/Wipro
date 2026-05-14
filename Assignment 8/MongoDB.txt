@@ -1,0 +1,796 @@
+comments> use CompanyDB
+switched to db CompanyDB
+CompanyDB> db.createCollection("employees")
+{ ok: 1 }
+CompanyDB> db.user.insertMany([
+...   {
+...     empId:'1',
+...     name:'Swayam',
+...     department:'HR',
+...     salary:100000,
+...     city:'Kanpur',
+...     age:23
+...   },
+...
+...   {
+...     empId:'2',
+...     name:'Aniket',
+...     department:'IT',
+...     salary:200000,
+...     city:'Kanpur',
+...     age:28
+...   },
+...
+...   {
+...     empId:'3',
+...     name:'Ramit',
+...     department:'IT',
+...     salary:200000,
+...     city:'Saharanpur',
+...     age:23
+...   },
+...
+...   {
+...     empId:'4',
+...     name:'Gulfam',
+...     department:'Acct',
+...     salary:150000,
+...     city:'Gorakhpur',
+...     age:23
+...   },
+...
+...   {
+...     empId:'5',
+...     name:'Aswin',
+...     department:'HR',
+...     salary:180000,
+...     city:'Trichy',
+...     age:21
+...   }
+... ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a0564f37ff441a771c73bfd'),
+    '1': ObjectId('6a0564f37ff441a771c73bfe'),
+    '2': ObjectId('6a0564f37ff441a771c73bff'),
+    '3': ObjectId('6a0564f37ff441a771c73c00'),
+    '4': ObjectId('6a0564f37ff441a771c73c01')
+  }
+}
+
+CompanyDB> db.user.insertOne([
+... { empId: '6', name: 'Asish', department: 'Acct', salary: 30000, city: 'Tehri Garhwal', age: 23 }])
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a0574647ff441a771c73c04')
+}
+
+CompanyDB> db.user.find()
+[
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bfd'),
+    empId: '1',
+    name: 'Swayam',
+    department: 'HR',
+    salary: 100000,
+    city: 'Kanpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bfe'),
+    empId: '2',
+    name: 'Aniket',
+    department: 'IT',
+    salary: 200000,
+    city: 'Kanpur',
+    age: 28
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bff'),
+    empId: '3',
+    name: 'Ramit',
+    department: 'IT',
+    salary: 200000,
+    city: 'Saharanpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73c00'),
+    empId: '4',
+    name: 'Gulfam',
+    department: 'Acct',
+    salary: 150000,
+    city: 'Gorakhpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73c01'),
+    empId: '5',
+    name: 'Aswin',
+    department: 'HR',
+    salary: 180000,
+    city: 'Trichy',
+    age: 21
+  },
+  {
+    '0': {
+      empId: '6',
+      name: 'Asish',
+      department: 'Acct',
+      salary: 30000,
+      city: 'Tehri Garhwal',
+      age: 23
+    },
+    _id: ObjectId('6a0574647ff441a771c73c04')
+  }
+]
+
+CompanyDB> db.user.find({}, { _id: 0, name: 1, salary: 1 })
+[
+  { name: 'Swayam', salary: 100000 },
+  { name: 'Aniket', salary: 200000 },
+  { name: 'Ramit', salary: 200000 },
+  { name: 'Gulfam', salary: 150000 },
+  { name: 'Aswin', salary: 180000 },
+  {}
+]
+
+CompanyDB> db.user.find({city:'delhi'})
+
+CompanyDB> // nothing will return because in data no one is from delhi
+
+CompanyDB> db.user.find({salary:{$gt:50000}})
+[
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bfd'),
+    empId: '1',
+    name: 'Swayam',
+    department: 'HR',
+    salary: 100000,
+    city: 'Kanpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bfe'),
+    empId: '2',
+    name: 'Aniket',
+    department: 'IT',
+    salary: 200000,
+    city: 'Kanpur',
+    age: 28
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bff'),
+    empId: '3',
+    name: 'Ramit',
+    department: 'IT',
+    salary: 200000,
+    city: 'Saharanpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73c00'),
+    empId: '4',
+    name: 'Gulfam',
+    department: 'Acct',
+    salary: 150000,
+    city: 'Gorakhpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73c01'),
+    empId: '5',
+    name: 'Aswin',
+    department: 'HR',
+    salary: 180000,
+    city: 'Trichy',
+    age: 21
+  }
+]
+CompanyDB> db.user.find({department:'IT'})
+[
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bfe'),
+    empId: '2',
+    name: 'Aniket',
+    department: 'IT',
+    salary: 200000,
+    city: 'Kanpur',
+    age: 28
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bff'),
+    empId: '3',
+    name: 'Ramit',
+    department: 'IT',
+    salary: 200000,
+    city: 'Saharanpur',
+    age: 23
+  }
+]
+
+CompanyDB> db.user.find({age:{$lt:30}})
+[
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bfd'),
+    empId: '1',
+    name: 'Swayam',
+    department: 'HR',
+    salary: 100000,
+    city: 'Kanpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bfe'),
+    empId: '2',
+    name: 'Aniket',
+    department: 'IT',
+    salary: 200000,
+    city: 'Kanpur',
+    age: 28
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bff'),
+    empId: '3',
+    name: 'Ramit',
+    department: 'IT',
+    salary: 200000,
+    city: 'Saharanpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73c00'),
+    empId: '4',
+    name: 'Gulfam',
+    department: 'Acct',
+    salary: 150000,
+    city: 'Gorakhpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73c01'),
+    empId: '5',
+    name: 'Aswin',
+    department: 'HR',
+    salary: 180000,
+    city: 'Trichy',
+    age: 21
+  }
+]
+
+companyDB> db.user.updateOne(
+...    { empId:'1' },
+...    { $set:{ salary:120000 } }
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+
+companyDB> db.user.updateOne(
+...    { name:'Swayam' },
+...    { $set:{ city:'Bangalore' } }
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+
+companyDB> db.user.updateMany(
+...    { department:'IT' },
+...    { $inc:{ salary:5000 } }
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+
+db.user.deleteOne({
+  empId:'5'
+})
+{
+  acknowledged: true,
+  deletedCount: 1
+}	
+
+companyDb> db.user.deleteMany({department:'Sales'})
+{ acknowledged: true, deletedCount: 0 } //bcz I Have Not added any Dept Name Sales thats why
+
+companyDb> db.user.deleteMany({
+...    salary:{ $lt:40000 }
+... })
+{ acknowledged: true, deletedCount: 0 }
+
+db.user.find({
+   salary:{ $gte:60000 }
+})
+
+{
+  _id: ObjectId('6a0564f37ff441a771c73bfd'),
+  empId: '1',
+  name: 'Swayam',
+  department: 'HR',
+  salary: 100000,
+  city: 'Kanpur',
+  age: 23
+}
+{
+  _id: ObjectId('6a0564f37ff441a771c73bfe'),
+  empId: '2',
+  name: 'Aniket',
+  department: 'IT',
+  salary: 200000,
+  city: 'Kanpur',
+  age: 28
+}
+{
+  _id: ObjectId('6a0564f37ff441a771c73bff'),
+  empId: '3',
+  name: 'Ramit',
+  department: 'IT',
+  salary: 200000,
+  city: 'Saharanpur',
+  age: 23
+}
+{
+  _id: ObjectId('6a0564f37ff441a771c73c00'),
+  empId: '4',
+  name: 'Gulfam',
+  department: 'Acct',
+  salary: 150000,
+  city: 'Gorakhpur',
+  age: 23
+}
+
+db.user.find({
+   age:{
+      $gte:25,
+      $lte:30
+   }
+})
+
+{
+  _id: ObjectId('6a0564f37ff441a771c73bfe'),
+  empId: '2',
+  name: 'Aniket',
+  department: 'IT',
+  salary: 200000,
+  city: 'Kanpur',
+  age: 28
+}
+
+CompanyDB> db.user.find({
+...    salary:{ $ne:45000 }
+... })
+[
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bfd'),
+    empId: '1',
+    name: 'Swayam',
+    department: 'HR',
+    salary: 100000,
+    city: 'Kanpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bfe'),
+    empId: '2',
+    name: 'Aniket',
+    department: 'IT',
+    salary: 200000,
+    city: 'Kanpur',
+    age: 28
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bff'),
+    empId: '3',
+    name: 'Ramit',
+    department: 'IT',
+    salary: 200000,
+    city: 'Saharanpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73c00'),
+    empId: '4',
+    name: 'Gulfam',
+    department: 'Acct',
+    salary: 150000,
+    city: 'Gorakhpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a058f9399c3f35f04d7efcf'),
+    empId: '6',
+    name: 'Asish',
+    department: 'Acct',
+    salary: 30000,
+    city: 'Tehri Garhwal',
+    age: 23
+  }
+]
+
+CompanyDB> db.user.find({
+...    city:'Delhi',
+...    salary:{ $gt:50000 }
+... })
+
+CompanyDB> // No Delhi Employee
+
+CompanyDB> db.user.find({
+...    $or:[
+...       {city:'Delhi'},
+...       {city:'Mumbai'}
+...    ]
+... })
+
+CompanyDB> // No delhi or Mumbai
+
+CompanyDB> db.user.find({
+...    department:{ $ne:'HR' }
+... })
+[
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bfe'),
+    empId: '2',
+    name: 'Aniket',
+    department: 'IT',
+    salary: 200000,
+    city: 'Kanpur',
+    age: 28
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bff'),
+    empId: '3',
+    name: 'Ramit',
+    department: 'IT',
+    salary: 200000,
+    city: 'Saharanpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73c00'),
+    empId: '4',
+    name: 'Gulfam',
+    department: 'Acct',
+    salary: 150000,
+    city: 'Gorakhpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a058f9399c3f35f04d7efcf'),
+    empId: '6',
+    name: 'Asish',
+    department: 'Acct',
+    salary: 30000,
+    city: 'Tehri Garhwal',
+    age: 23
+  }
+]
+
+CompanyDB> db.user.find({
+...    name:/^A/
+... })
+[
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bfe'),
+    empId: '2',
+    name: 'Aniket',
+    department: 'IT',
+    salary: 200000,
+    city: 'Kanpur',
+    age: 28
+  },
+  {
+    _id: ObjectId('6a058f9399c3f35f04d7efcf'),
+    empId: '6',
+    name: 'Asish',
+    department: 'Acct',
+    salary: 30000,
+    city: 'Tehri Garhwal',
+    age: 23
+  }
+]
+
+CompanyDB> db.user.find({
+...    name:/n$/
+... })
+
+CompanyDB> // I dont have any employee whose ending name alphabet is 'n'
+
+CompanyDB> db.user.find({
+...    department:/IT/
+... })
+[
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bfe'),
+    empId: '2',
+    name: 'Aniket',
+    department: 'IT',
+    salary: 200000,
+    city: 'Kanpur',
+    age: 28
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bff'),
+    empId: '3',
+    name: 'Ramit',
+    department: 'IT',
+    salary: 200000,
+    city: 'Saharanpur',
+    age: 23
+  }
+]
+
+CompanyDB> db.user.find().sort({
+...    salary:1
+... })
+[
+  {
+    _id: ObjectId('6a058f9399c3f35f04d7efcf'),
+    empId: '6',
+    name: 'Asish',
+    department: 'Acct',
+    salary: 30000,
+    city: 'Tehri Garhwal',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bfd'),
+    empId: '1',
+    name: 'Swayam',
+    department: 'HR',
+    salary: 100000,
+    city: 'Kanpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73c00'),
+    empId: '4',
+    name: 'Gulfam',
+    department: 'Acct',
+    salary: 150000,
+    city: 'Gorakhpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bfe'),
+    empId: '2',
+    name: 'Aniket',
+    department: 'IT',
+    salary: 200000,
+    city: 'Kanpur',
+    age: 28
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bff'),
+    empId: '3',
+    name: 'Ramit',
+    department: 'IT',
+    salary: 200000,
+    city: 'Saharanpur',
+    age: 23
+  }
+]
+
+CompanyDB> db.user.find().sort({
+...    salary:-1
+... })
+[
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bfe'),
+    empId: '2',
+    name: 'Aniket',
+    department: 'IT',
+    salary: 200000,
+    city: 'Kanpur',
+    age: 28
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bff'),
+    empId: '3',
+    name: 'Ramit',
+    department: 'IT',
+    salary: 200000,
+    city: 'Saharanpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73c00'),
+    empId: '4',
+    name: 'Gulfam',
+    department: 'Acct',
+    salary: 150000,
+    city: 'Gorakhpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bfd'),
+    empId: '1',
+    name: 'Swayam',
+    department: 'HR',
+    salary: 100000,
+    city: 'Kanpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a058f9399c3f35f04d7efcf'),
+    empId: '6',
+    name: 'Asish',
+    department: 'Acct',
+    salary: 30000,
+    city: 'Tehri Garhwal',
+    age: 23
+  }
+]
+
+CompanyDB> db.user.find().sort({salary:-1}).limit(3)
+[
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bfe'),
+    empId: '2',
+    name: 'Aniket',
+    department: 'IT',
+    salary: 200000,
+    city: 'Kanpur',
+    age: 28
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bff'),
+    empId: '3',
+    name: 'Ramit',
+    department: 'IT',
+    salary: 200000,
+    city: 'Saharanpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73c00'),
+    empId: '4',
+    name: 'Gulfam',
+    department: 'Acct',
+    salary: 150000,
+    city: 'Gorakhpur',
+    age: 23
+  }
+]
+CompanyDB> db.user.find().skip(2)
+[
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bff'),
+    empId: '3',
+    name: 'Ramit',
+    department: 'IT',
+    salary: 200000,
+    city: 'Saharanpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a0564f37ff441a771c73c00'),
+    empId: '4',
+    name: 'Gulfam',
+    department: 'Acct',
+    salary: 150000,
+    city: 'Gorakhpur',
+    age: 23
+  },
+  {
+    _id: ObjectId('6a058f9399c3f35f04d7efcf'),
+    empId: '6',
+    name: 'Asish',
+    department: 'Acct',
+    salary: 30000,
+    city: 'Tehri Garhwal',
+    age: 23
+  }
+]
+
+CompanyDB> db.user.aggregate([{$group:{_id:null, averageSalary:{ $avg:"$salary" }}}])
+[ { _id: null, averageSalary: 136000 } ]
+
+CompanyDB> db.user.aggregate([
+...    {
+...       $group:{
+...          _id:null,
+...          maximumSalary:{ $max:"$salary" }
+...       }
+...    }
+... ])
+[ { _id: null, maximumSalary: 200000 } ]
+
+
+CompanyDB> db.user.aggregate([
+...    {
+...       $group:{
+...          _id:null,
+...          minimumSalary:{ $min:"$salary" }
+...       }
+...    }
+... ])
+[ { _id: null, minimumSalary: 30000 } ]
+
+CompanyDB> db.user.aggregate([
+...    {
+...       $group:{
+...          _id:"$department",
+...          totalSalary:{ $sum:"$salary" }
+...       }
+...    }
+... ])
+[
+  { _id: 'IT', totalSalary: 400000 },
+  { _id: 'HR', totalSalary: 100000 },
+  { _id: 'Acct', totalSalary: 180000 }
+]
+
+CompanyDB> db.user.aggregate([
+...    {
+...       $group:{
+...          _id:"$department",
+...          employeeCount:{ $sum:1 }
+...       }
+...    }
+... ])
+[
+  { _id: 'Acct', employeeCount: 2 },
+  { _id: 'HR', employeeCount: 1 },
+  { _id: 'IT', employeeCount: 2 }
+]
+
+CompanyDB> db.user.createIndex({department:1})
+department_1
+CompanyDB> db.user.createIndex({city:1,salary:-1})
+city_1_salary_-1
+CompanyDB> db.user.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { department: 1 }, name: 'department_1' },
+  { v: 2, key: { city: 1, salary: -1 }, name: 'city_1_salary_-1' }
+]
+CompanyDB> db.user.distinct("city")
+[ 'Gorakhpur', 'Kanpur', 'Saharanpur', 'Tehri Garhwal' ]
+
+CompanyDB> db.user.countDocuments()
+5
+CompanyDB> db.user.find().sort({salary:-1}).skip(1).limit(1)
+[
+  {
+    _id: ObjectId('6a0564f37ff441a771c73bfe'),
+    empId: '2',
+    name: 'Aniket',
+    department: 'IT',
+    salary: 200000,
+    city: 'Kanpur',
+    age: 28
+  }
+]
+CompanyDB> db.user.updateMany({},{$rename:{city:"location"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 5,
+  modifiedCount: 5,
+  upsertedCount: 0
+}
+CompanyDB> db.user.updateMany({},{$unset:{bonus:""}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 5,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+CompanyDB> db.user.drop()
+true
+CompanyDB> db.dropDatabase()
+{ ok: 1, dropped: 'CompanyDB' }
