@@ -21,7 +21,3 @@ class Student{
 const student1 = new Student("Ajay", 1, 85);
 student1.DisplayDetails();
 student1.checkResults();
-
-let name = prompt("Enter your name");
-
-console.log(name);
