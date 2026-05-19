@@ -1,0 +1,158 @@
+doctype html
+html
+  head
+    title Student CRUD
+    style.
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        margin: 40px auto;
+        max-width: 900px;
+        background-color: #f8fafc;
+        color: #1e293b;
+        padding: 0 20px;
+      }
+      h1 {
+        color: #0f172a;
+        font-size: 28px;
+        margin-bottom: 20px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        background: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        margin-top: 15px;
+      }
+      th {
+        background-color: #4f46e5;
+        color: #ffffff;
+        text-align: left;
+        padding: 14px 18px;
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      td {
+        padding: 14px 18px;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 15px;
+        vertical-align: middle;
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+      tr:hover {
+        background-color: #f8fafc;
+      }
+
+      a {
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        display: inline-block;
+        vertical-align: middle;
+      }
+      a[href="/add"] {
+        background-color: #4f46e5;
+        color: #ffffff;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: background-color 0.2s;
+      }
+      a[href="/add"]:hover {
+        background-color: #4338ca;
+      }
+      a[href^="/edit"] {
+        background-color: #f59e0b;
+        color: #ffffff;
+        padding: 6px 14px;
+        border-radius: 4px;
+        font-weight: 600;
+        margin-right: 8px;
+        transition: background-color 0.2s;
+      }
+      a[href^="/edit"]:hover {
+        background-color: #d97706;
+      }
+      form[style*="display:inline"] button[type="submit"] {
+        background-color: #ef4444 !important;
+        color: #ffffff !important;
+        padding: 6px 14px !important;
+        border-radius: 4px !important;
+        border: none !important;
+        font-family: inherit !important;
+        font-weight: 600 !important;
+        font-size: 14px !important;
+        cursor: pointer !important;
+        transition: background-color 0.2s !important;
+        width: auto !important;
+        margin-top: 0 !important;
+        display: inline-block !important;
+        vertical-align: middle !important;
+      }
+      form[style*="display:inline"] button[type="submit"]:hover {
+        background-color: #dc2626 !important;
+      }
+      form[style*="display:inline"] {
+        background: transparent !important;
+        padding: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        display: inline !important;
+        margin: 0 !important;
+      }
+
+      form:not([style*="display:inline"]) {
+        background: #ffffff;
+        padding: 28px;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        max-width: 450px;
+      }
+      form label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #475569;
+        font-size: 14px;
+      }
+      form input {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: 15px;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      form input:focus {
+        border-color: #4f46e5;
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+      }
+      
+      form:not([style*="display:inline"]) button[type="submit"] {
+        background-color: #4f46e5;
+        color: #ffffff;
+        padding: 10px 20px;
+        border-radius: 6px;
+        border: none;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        font-family: inherit;
+        transition: background-color 0.2s;
+        width: 100%;
+        margin-top: 10px;
+      }
+      form:not([style*="display:inline"]) button[type="submit"]:hover {
+        background-color: #4338ca;
+      }
+  body
+    block content

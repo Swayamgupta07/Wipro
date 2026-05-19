@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  h1 Add Student
+
+  form(action='/add', method='POST')
+    div
+      label Name:
+      input(type='text', name='name', required)
+
+    br
+
+    div
+      label Course:
+      input(type='text', name='course', required)
+
+    br
+
+    div
+      label Marks:
+      input(type='number', name='marks', required)
+
+    br
+
+    button(type='submit') Add Student
