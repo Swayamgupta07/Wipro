@@ -1,13 +1,15 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const path = require('path');
-const session = require('express-session');
-const flash = require('connect-flash');
+const cors = require('cors');
 const studentRoutes = require('./routes/studentRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 const mongoURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/studentApiDB';
 mongoose.connect(mongoURI)
@@ -17,35 +19,14 @@ mongoose.connect(mongoURI)
     process.exit(1);
   });
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'supersecretstudentmanagementkey',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 60000 }
-}));
-app.use(flash());
-
-app.use((req, res, next) => {
-  res.locals.success = req.flash('success');
-  res.locals.error = req.flash('error');
-  next();
-});
-
 app.use('/students', studentRoutes);
 
 app.get('/', (req, res) => {
-  res.redirect('/students');
+  res.json({ success: true, message: 'Welcome to the Student REST API. Use /students endpoints.' });
 });
 
 app.use((req, res) => {
-  res.status(404).send('<h2>404 - Page Not Found</h2><a href="/students">Return to Home</a>');
+  res.status(404).json({ success: false, message: 'API Endpoint Not Found' });
 });
 
 app.listen(PORT, () => {

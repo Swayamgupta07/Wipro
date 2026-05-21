@@ -17,29 +17,31 @@ exports.getAllStudents = async (req, res) => {
     }
 
     const students = await Student.find(query).sort({ rollno: 1 });
-    res.render('index', { 
-      students, 
-      search: search || ''
-    });
+    res.json({ success: true, data: students });
   } catch (error) {
-    res.status(500).send('Server Error: ' + error.message);
+    res.status(500).json({ success: false, error: error.message });
   }
 };
 
-exports.showAddForm = (req, res) => {
-  res.render('addStudent', {
-    formData: req.flash('formData')[0] || {}
-  });
+exports.viewStudent = async (req, res) => {
+  try {
+    const student = await Student.findOne({ rollno: req.params.id });
+    if (!student) {
+      return res.status(404).json({ success: false, message: 'Student not found!' });
+    }
+    res.json({ success: true, data: student });
+  } catch (error) {
+    res.status(400).json({ success: false, error: 'Invalid Student ID' });
+  }
 };
 
 exports.createStudent = async (req, res) => {
   try {
     const { name, rollno, course, age, email, city } = req.body;
+    
     const existingStudent = await Student.findOne({ rollno });
     if (existingStudent) {
-      req.flash('error', 'Roll Number already exists! Please use a unique roll number.');
-      req.flash('formData', req.body);
-      return res.redirect('/students/add');
+      return res.status(400).json({ success: false, message: 'Roll Number already exists!' });
     }
 
     const student = new Student({
@@ -47,47 +49,13 @@ exports.createStudent = async (req, res) => {
     });
 
     await student.save();
-    req.flash('success', 'Student record created successfully!');
-    res.redirect('/students');
+    res.status(201).json({ success: true, message: 'Student added successfully!', data: student });
   } catch (error) {
     if (error.name === 'ValidationError') {
       const messages = Object.values(error.errors).map(val => val.message);
-      req.flash('error', messages.join(', '));
-    } else {
-      req.flash('error', 'Something went wrong: ' + error.message);
+      return res.status(400).json({ success: false, message: messages.join(', ') });
     }
-    req.flash('formData', req.body);
-    res.redirect('/students/add');
-  }
-};
-
-exports.viewStudent = async (req, res) => {
-  try {
-    const student = await Student.findById(req.params.id);
-    if (!student) {
-      req.flash('error', 'Student not found!');
-      return res.redirect('/students');
-    }
-    res.render('viewStudent', { student });
-  } catch (error) {
-    req.flash('error', 'Invalid Student ID');
-    res.redirect('/students');
-  }
-};
-
-exports.showEditForm = async (req, res) => {
-  try {
-    const student = await Student.findById(req.params.id);
-    if (!student) {
-      req.flash('error', 'Student not found!');
-      return res.redirect('/students');
-    }
-    res.render('editStudent', { 
-      student
-    });
-  } catch (error) {
-    req.flash('error', 'Invalid Student ID');
-    res.redirect('/students');
+    res.status(400).json({ success: false, message: 'Something went wrong: ' + error.message });
   }
 };
 
@@ -95,41 +63,34 @@ exports.updateStudent = async (req, res) => {
   try {
     const { name, course, age, email, city } = req.body;
 
-    const student = await Student.findByIdAndUpdate(
-      req.params.id, 
+    const student = await Student.findOneAndUpdate(
+      { rollno: req.params.id }, 
       { name, course, age, email, city },
       { new: true, runValidators: true }
     );
 
     if (!student) {
-      req.flash('error', 'Student not found!');
-      return res.redirect('/students');
+      return res.status(404).json({ success: false, message: 'Student not found!' });
     }
 
-    req.flash('success', 'Student record updated successfully!');
-    res.redirect('/students');
+    res.json({ success: true, message: 'Student updated successfully!', data: student });
   } catch (error) {
     if (error.name === 'ValidationError') {
       const messages = Object.values(error.errors).map(val => val.message);
-      req.flash('error', messages.join(', '));
-    } else {
-      req.flash('error', 'Update failed: ' + error.message);
+      return res.status(400).json({ success: false, message: messages.join(', ') });
     }
-    res.redirect(`/students/edit/${req.params.id}`);
+    res.status(400).json({ success: false, message: 'Update failed: ' + error.message });
   }
 };
 
 exports.deleteStudent = async (req, res) => {
   try {
-    const student = await Student.findByIdAndDelete(req.params.id);
+    const student = await Student.findOneAndDelete({ rollno: req.params.id });
     if (!student) {
-      req.flash('error', 'Student not found!');
-      return res.redirect('/students');
+      return res.status(404).json({ success: false, message: 'Student not found!' });
     }
-    req.flash('success', 'Student record deleted successfully!');
-    res.redirect('/students');
+    res.json({ success: true, message: 'Student deleted successfully!' });
   } catch (error) {
-    req.flash('error', 'Could not delete student: ' + error.message);
-    res.redirect('/students');
+    res.status(400).json({ success: false, message: 'Could not delete student: ' + error.message });
   }
 };
