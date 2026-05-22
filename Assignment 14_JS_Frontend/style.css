@@ -1,0 +1,41 @@
+:root {
+  --primary-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  --text-dark: #1e293b;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-dark);
+}
+
+.dashboard-header {
+    background: var(--primary-gradient);
+}
+
+.form-control:focus, .form-select:focus {
+    box-shadow: none;
+    border: 1px solid #6366f1 !important;
+}
+
+.btn-primary {
+    background: var(--primary-gradient);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+    transform: translateY(-1px);
+}
+
+.table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    color: #64748b;
+}
+
+.table td {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
