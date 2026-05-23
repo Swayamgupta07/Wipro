@@ -1,0 +1,15 @@
+<h2>Student Details</h2>
+<p>Name: {{ name }}</p>
+<p>Age: {{ age }}</p>
+<img [src]="imageUrl" width="150">
+<br><br>
+
+<button (click)="showMessage()">Click Me</button>
+
+<p>{{ message }}</p>
+
+<br>
+
+<input type="text" [(ngModel)]="name">
+
+<p>Updated Name: {{ name }}</p>
