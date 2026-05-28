@@ -1,15 +1,26 @@
-<h2>Student Details</h2>
-<p>Name: {{ name }}</p>
-<p>Age: {{ age }}</p>
-<img [src]="imageUrl" width="150">
-<br><br>
+<div class="page-wrapper">
+  <header class="app-header">
+    <h1>Student Portal</h1>
+  </header>
 
-<button (click)="showMessage()">Click Me</button>
+  <main class="content-area">
+    <div class="card">
+      <div class="profile-section">
+        <img [src]="imageUrl" alt="Profile" class="avatar">
+        <div class="info">
+          <h2 class="name">{{ name }}</h2>
+          <p class="age">Age: <span>{{ age }}</span></p>
+        </div>
+      </div>
 
-<p>{{ message }}</p>
+      <div class="interactive-section">
+        <button class="glow-btn" (click)="showMessage()">Button</button>
+        <p class="status-msg">{{ message }}</p>
 
-<br>
-
-<input type="text" [(ngModel)]="name">
-
-<p>Updated Name: {{ name }}</p>
+        <div class="update-box">
+          <input type="text" [(ngModel)]="name" class="modern-input" placeholder="Enter new name...">
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

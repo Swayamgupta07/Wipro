@@ -1,0 +1,64 @@
+<div class="card shadow-sm border-0 mt-2">
+  <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Employee Directory</h5>
+    <div class="w-25">
+      <select class="form-select form-select-sm" [(ngModel)]="selectedDepartment">
+        <option value="All">All Departments</option>
+        <option value="IT">IT</option>
+        <option value="HR">HR</option>
+        <option value="Engineering">Engineering</option>
+        <option value="Sales">Sales</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card-body p-0">
+    <table class="table table-striped table-hover mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>Name (UPPERCASE pipe)</th>
+          <th>Department</th>
+          <th>Email (Titlecase pipe)</th>
+          <th>Salary (Currency pipe)</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- *ngFor: A structural directive that acts like a loop. It creates a table row (<tr>) for every employee in the list. -->
+        <!-- | departmentFilter:selectedDepartment : This is our CUSTOM PIPE. It filters the array to only show employees matching the dropdown selection BEFORE the *ngFor loop runs. -->
+        <tr *ngFor="let emp of employees | departmentFilter:selectedDepartment">
+
+          <td class="fw-bold">{{ emp.id }}</td>
+
+          <!-- Built-in pipe: 'uppercase'. Converts the name string to all capital letters. (e.g., swayam -> SWAYAM) -->
+          <td>{{ emp.name | uppercase }}</td>
+
+          <td><span class="badge bg-secondary">{{ emp.department }}</span></td>
+
+          <!-- Built-in pipe: 'titlecase'. Capitalizes the first letter of each word. -->
+          <td>{{ emp.email | titlecase }}</td>
+
+          <!-- Built-in pipe: 'currency'. Formats the number as money. 'INR' adds the Indian Rupee symbol, 'symbol' shows the symbol instead of the code, and '1.0-0' removes decimal places. -->
+          <td>{{ emp.salary | currency:'INR':'symbol':'1.0-0' }}</td>
+
+          <td class="text-center">
+            <!-- Event Binding: Clicking this button calls the onEdit() function in TypeScript and passes the specific employee data to it. -->
+            <button class="btn btn-sm btn-outline-primary me-2" (click)="onEdit(emp)">Edit</button>
+
+            <!-- Event Binding: Passes just the ID to the onDelete() function so it knows who to delete. -->
+            <button class="btn btn-sm btn-outline-danger" (click)="onDelete(emp.id)">Delete</button>
+          </td>
+        </tr>
+
+        <!-- *ngIf: A structural directive that checks a condition. -->
+        <!-- If the filtered array has 0 employees (length === 0), it shows this "No employees found" row. Otherwise, this row stays hidden. -->
+        <tr *ngIf="(employees | departmentFilter:selectedDepartment).length === 0">
+          <td colspan="6" class="text-center py-4 text-muted">
+            <em>No employees found in this department.</em>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
