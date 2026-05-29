@@ -22,17 +22,17 @@ export class EmployeeForm implements OnInit {
 
   // Pre-defined departments for our dropdown selection
   departments: string[] = [
-    'Engineering', 
-    'HR', 
-    'Product Management', 
-    'Sales', 
-    'Marketing', 
-    'Finance', 
+    'Engineering',
+    'HR',
+    'Product Management',
+    'Sales',
+    'Marketing',
+    'Finance',
     'Operations'
   ];
 
   // Pre-defined genders for our radio buttons
-  genders: string[] = ['Male', 'Female', 'Other'];
+  genders: string[] = ['Male', 'Female'];
 
   constructor(
     private fb: FormBuilder,
