@@ -1,0 +1,306 @@
+<!-- Dashboard Container -->
+<div class="container py-4 animate-fade-in">
+
+  <!-- Header Section -->
+  <div class="row align-items-center mb-4">
+    <div class="col-md-6">
+      <h1 class="h2 text-dark fw-bold mb-1">Employee Core Directory</h1>
+      <p class="text-secondary mb-0">Manage your workforce, salaries, and profiles seamlessly</p>
+    </div>
+    <div class="col-md-6 text-md-end mt-3 mt-md-0">
+      <a routerLink="/add" class="btn btn-gradient-primary px-4 py-2 fw-semibold shadow-sm">
+        <i class="bi bi-person-plus-fill me-2"></i>Add Employee
+      </a>
+    </div>
+  </div>
+
+  <!-- Live Statistics Cards -->
+  <div class="row g-3 mb-4" *ngIf="!isLoading && !errorMessage">
+    <!-- Stat 1: Total Employees -->
+    <div class="col-6 col-lg-3">
+      <div class="card stat-card border-0 p-3 h-100 shadow-sm">
+        <div class="d-flex align-items-center">
+          <div class="icon-shape bg-primary-soft text-primary rounded-3 p-3 me-3">
+            <i class="bi bi-people fs-4"></i>
+          </div>
+          <div>
+            <h6 class="text-secondary fw-semibold mb-1 small uppercase tracking-wider">Total Members</h6>
+            <h3 class="fw-bold mb-0 text-dark">{{ totalEmployees }}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stat 2: Avg Salary -->
+    <div class="col-6 col-lg-3">
+      <div class="card stat-card border-0 p-3 h-100 shadow-sm">
+        <div class="d-flex align-items-center">
+          <div class="icon-shape bg-warning-soft text-warning rounded-3 p-3 me-3">
+            <i class="bi bi-currency-dollar fs-4"></i>
+          </div>
+          <div>
+            <h6 class="text-secondary fw-semibold mb-1 small uppercase tracking-wider">Average Salary</h6>
+            <h3 class="fw-bold mb-0 text-dark">{{ averageSalary | currency:'INR':'symbol':'1.0-0' }}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stat 3: Tech Department -->
+    <div class="col-6 col-lg-3">
+      <div class="card stat-card border-0 p-3 h-100 shadow-sm">
+        <div class="d-flex align-items-center">
+          <div class="icon-shape bg-info-soft text-info rounded-3 p-3 me-3">
+            <i class="bi bi-cpu fs-4"></i>
+          </div>
+          <div>
+            <h6 class="text-secondary fw-semibold mb-1 small uppercase tracking-wider">Tech Team</h6>
+            <h3 class="fw-bold mb-0 text-dark">{{ engineeringCount }}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stat 4: System Status -->
+    <div class="col-6 col-lg-3">
+      <div class="card stat-card border-0 p-3 h-100 shadow-sm">
+        <div class="d-flex align-items-center">
+          <div class="icon-shape bg-success-soft text-success rounded-3 p-3 me-3">
+            <i class="bi bi-server fs-4"></i>
+          </div>
+          <div>
+            <h6 class="text-secondary fw-semibold mb-1 small uppercase tracking-wider">Database API</h6>
+            <h3 class="fw-bold mb-0 text-success text-shadow-green">Active</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters & Controls Bar -->
+  <div class="card control-bar border-0 mb-4 p-3 shadow-sm" *ngIf="!errorMessage">
+    <div class="row g-3 align-items-center">
+      <!-- Search Input -->
+      <div class="col-md-6">
+        <div class="input-group search-input-group">
+          <span class="input-group-text border-0 text-secondary bg-transparent"><i class="bi bi-search"></i></span>
+          <input type="text" 
+                 class="form-control border-0 bg-transparent text-dark fw-medium" 
+                 placeholder="Search by Name, Department, or Designation..." 
+                 [(ngModel)]="searchQuery">
+          <button *ngIf="searchQuery" 
+                  class="btn btn-link border-0 text-secondary pe-3" 
+                  (click)="searchQuery = ''">
+            <i class="bi bi-x-circle"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- View Toggle Buttons -->
+      <div class="col-md-6 text-md-end d-flex justify-content-md-end align-items-center gap-3">
+        <span class="text-secondary d-none d-md-inline small fw-semibold">View Mode:</span>
+        <div class="btn-group shadow-sm" role="group">
+          <button type="button" 
+                  class="btn py-2 px-3 fw-medium d-flex align-items-center gap-2"
+                  [class.btn-gradient-secondary]="viewMode === 'grid'"
+                  [class.btn-dark-slate]="viewMode !== 'grid'"
+                  (click)="setViewMode('grid')">
+            <i class="bi bi-grid-fill"></i>Cards
+          </button>
+          <button type="button" 
+                  class="btn py-2 px-3 fw-medium d-flex align-items-center gap-2"
+                  [class.btn-gradient-secondary]="viewMode === 'table'"
+                  [class.btn-dark-slate]="viewMode !== 'table'"
+                  (click)="setViewMode('table')">
+            <i class="bi bi-table"></i>Spreadsheet
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State Spinner -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary fs-4" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="text-secondary mt-3">Connecting to backend server...</p>
+  </div>
+
+  <!-- Error Connection Alert -->
+  <div *ngIf="errorMessage" class="alert alert-custom-danger border-0 p-4 rounded-3 d-flex align-items-center shadow-lg animate-fade-in" role="alert">
+    <div class="fs-1 me-3 text-danger"><i class="bi bi-exclamation-triangle-fill"></i></div>
+    <div>
+      <h5 class="alert-heading fw-bold mb-1 text-dark">Database Server Offline</h5>
+      <p class="mb-2">{{ errorMessage }}</p>
+      <button class="btn btn-outline-dark btn-sm fw-bold px-3" (click)="loadAllEmployees()">
+        <i class="bi bi-arrow-clockwise me-1"></i>Try Reconnecting
+      </button>
+    </div>
+  </div>
+
+  <!-- Empty Results State -->
+  <div *ngIf="!isLoading && !errorMessage && (employees | employeeSearch: searchQuery).length === 0" 
+       class="card empty-card border-0 py-5 text-center shadow-sm animate-fade-in">
+    <div class="display-1 text-secondary mb-3"><i class="bi bi-person-x"></i></div>
+    <h4 class="text-dark fw-bold">No Employees Found</h4>
+    <p class="text-secondary max-width-500 mx-auto px-3">
+      We couldn't find anyone matching "{{ searchQuery }}". Try checking your spelling or clear the filter to view all employees.
+    </p>
+    <button class="btn btn-outline-secondary btn-sm px-4 py-2 mt-2 max-width-200 mx-auto" (click)="searchQuery = ''">
+      Clear Search Query
+    </button>
+  </div>
+
+  <!-- Display Directory (Grid Card View) -->
+  <div *ngIf="!isLoading && !errorMessage && viewMode === 'grid'" class="row g-4 animate-fade-in">
+    <!-- Loop through filtered employees -->
+    <div class="col-12 col-md-6 col-xl-4" *ngFor="let emp of (employees | employeeSearch: searchQuery)">
+      <!-- Custom HighlightSalary Directive: Styles the card border based on salary value -->
+      <div class="card employee-card h-100 border border-2 shadow-sm" appHighlightSalary [salary]="emp.salary || 0">
+        <!-- Top Colored Border Accent & Background -->
+        <div class="employee-card-bg"></div>
+        
+        <div class="card-body p-4 pt-0 text-center relative-top">
+          <!-- Profile Picture & Avatar -->
+          <div class="profile-pic-container mb-3 shadow-lg">
+            <img [src]="emp.profileImage || 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=150&h=150&fit=crop&crop=face'" 
+                 [alt]="emp.employeeName" 
+                 class="profile-pic rounded-circle border border-3 border-white bg-light shadow-sm"
+                 onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=' + encodeURIComponent(emp.employeeName)">
+          </div>
+
+          <!-- Employee Header Info -->
+          <h5 class="card-title text-dark fw-bold mb-1">{{ emp.employeeName }}</h5>
+          <p class="text-primary small fw-semibold tracking-wide mb-2 uppercase">{{ emp.designation }}</p>
+          
+          <!-- Department Badge (Pastel Styled) -->
+          <span class="badge px-3 py-2 rounded-pill small mb-3 shadow-sm"
+                [class.badge-dept-eng]="emp.department === 'Engineering'"
+                [class.badge-dept-hr]="emp.department === 'HR'"
+                [class.badge-dept-prod]="emp.department === 'Product Management'"
+                [class.badge-dept-mkt]="emp.department === 'Marketing' || emp.department === 'Sales'"
+                [class.badge-dept-ops]="emp.department === 'Operations' || emp.department === 'Finance' || emp.department === 'Operations'">
+            <i class="bi bi-briefcase me-1"></i>{{ emp.department }}
+          </span>
+
+          <hr class="border-secondary border-opacity-10 my-3">
+
+          <!-- Key Details Grid -->
+          <div class="row g-2 mb-3 text-start small">
+            <div class="col-6">
+              <span class="text-secondary d-block">Salary Bracket</span>
+              <span class="text-dark fw-bold">{{ emp.salary | currency:'INR':'symbol':'1.0-0' }}</span>
+            </div>
+            <div class="col-6">
+              <span class="text-secondary d-block">Demographics</span>
+              <span class="text-dark fw-bold">{{ emp.age }} yrs • {{ emp.gender }}</span>
+            </div>
+            <div class="col-12 mt-2">
+              <span class="text-secondary d-block">Contact Info</span>
+              <span class="text-dark d-block text-truncate"><i class="bi bi-envelope me-2 text-primary small"></i>{{ emp.email }}</span>
+              <span class="text-dark d-block"><i class="bi bi-telephone me-2 text-primary small"></i>{{ emp.phone }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Footer -->
+        <div class="card-footer bg-light border-top border-secondary border-opacity-10 p-3 d-flex justify-content-center gap-3">
+          <a [routerLink]="['/details', emp.id]" class="btn btn-dark-slate-btn text-white" title="View Dossier">
+            <i class="bi bi-eye text-primary"></i>
+          </a>
+          <a [routerLink]="['/edit', emp.id]" class="btn btn-dark-slate-btn text-warning" title="Edit Profile">
+            <i class="bi bi-pencil-square text-warning"></i>
+          </a>
+          <button (click)="onDelete(emp.id, emp.employeeName)" class="btn btn-dark-slate-btn text-danger" title="Delete Profile">
+            <i class="bi bi-trash3 text-danger"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Display Directory (Spreadsheet Table View) -->
+  <div *ngIf="!isLoading && !errorMessage && viewMode === 'table'" class="card border-0 shadow-lg animate-fade-in overflow-hidden">
+    <div class="table-responsive">
+      <table class="table table-hover table-light align-middle table-borderless mb-0">
+        <thead class="bg-light border-bottom border-secondary border-opacity-10">
+          <tr class="text-secondary small fw-bold tracking-wider">
+            <th class="ps-4">Employee</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Salary Bracket</th>
+            <th>Demographics</th>
+            <th>Email & Phone</th>
+            <th class="pe-4 text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Loop through filtered employees and bind salary custom directive to rows -->
+          <tr *ngFor="let emp of (employees | employeeSearch: searchQuery)" 
+              appHighlightSalary 
+              [salary]="emp.salary || 0" 
+              class="border-start border-3">
+            <!-- Col 1: Employee Face & Name -->
+            <td class="ps-4">
+              <div class="d-flex align-items-center gap-3">
+                <img [src]="emp.profileImage || 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=80&h=80&fit=crop'" 
+                     [alt]="emp.employeeName" 
+                     class="rounded-circle border border-2 border-white shadow-sm"
+                     style="width: 44px; height: 44px; object-fit: cover;"
+                     onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=' + encodeURIComponent(emp.employeeName)">
+                <div>
+                  <h6 class="mb-0 text-dark fw-bold">{{ emp.employeeName }}</h6>
+                  <span class="text-secondary small">ID: EMP-{{ emp.id | number:'3.0-0' }}</span>
+                </div>
+              </div>
+            </td>
+            
+            <!-- Col 2: Department (Pastel Badge) -->
+            <td>
+              <span class="badge px-3 py-1.5 shadow-sm"
+                    [class.badge-dept-eng]="emp.department === 'Engineering'"
+                    [class.badge-dept-hr]="emp.department === 'HR'"
+                    [class.badge-dept-prod]="emp.department === 'Product Management'"
+                    [class.badge-dept-mkt]="emp.department === 'Marketing' || emp.department === 'Sales'"
+                    [class.badge-dept-ops]="emp.department === 'Operations' || emp.department === 'Finance' || emp.department === 'Operations'">
+                {{ emp.department }}
+              </span>
+            </td>
+            
+            <!-- Col 3: Designation -->
+            <td class="text-dark fw-semibold small">{{ emp.designation }}</td>
+            
+            <!-- Col 4: Salary -->
+            <td class="text-dark fw-bold">{{ emp.salary | currency:'INR':'symbol':'1.0-0' }}</td>
+            
+            <!-- Col 5: Demographics -->
+            <td class="text-secondary small">{{ emp.age }} yrs • {{ emp.gender }}</td>
+            
+            <!-- Col 6: Contact Info -->
+            <td class="small">
+              <div class="text-dark"><i class="bi bi-envelope me-1.5 text-primary"></i>{{ emp.email }}</div>
+              <div class="text-dark mt-1"><i class="bi bi-telephone me-1.5 text-primary"></i>{{ emp.phone }}</div>
+            </td>
+            
+            <!-- Col 7: Action Buttons (Spacious Round Icons) -->
+            <td class="pe-4 text-end">
+              <div class="btn-group">
+                <a [routerLink]="['/details', emp.id]" class="btn btn-dark-slate-btn text-white" title="View Dossier">
+                  <i class="bi bi-eye text-primary"></i>
+                </a>
+                <a [routerLink]="['/edit', emp.id]" class="btn btn-dark-slate-btn text-warning" title="Edit Profile">
+                  <i class="bi bi-pencil-square text-warning"></i>
+                </a>
+                <button (click)="onDelete(emp.id, emp.employeeName)" class="btn btn-dark-slate-btn text-danger" title="Delete Profile">
+                  <i class="bi bi-trash3 text-danger"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

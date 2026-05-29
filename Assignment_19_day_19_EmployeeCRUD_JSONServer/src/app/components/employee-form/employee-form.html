@@ -1,0 +1,253 @@
+<div class="container py-4 max-width-800 animate-fade-in">
+
+  <!-- Breadcrumb Navigation -->
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/" class="text-primary text-decoration-none">Dashboard</a></li>
+      <li class="breadcrumb-item active text-secondary" aria-current="page">
+        {{ isEditMode ? 'Edit Employee Record' : 'Register New Employee' }}
+      </li>
+    </ol>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="mb-4">
+    <h2 class="text-dark fw-bold d-flex align-items-center gap-2">
+      <i class="bi" [ngClass]="isEditMode ? 'bi-pencil-square text-warning' : 'bi-person-plus-fill text-primary'"></i>
+      {{ isEditMode ? 'Modify Employee Record' : 'Register New Employee' }}
+    </h2>
+    <p class="text-secondary mb-0">
+      {{ isEditMode ? 'Make edits to the profile information below. All changes will sync with the database.' : 'Enter details to add a new employee profile to the central directory database.' }}
+    </p>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading employee...</span>
+    </div>
+    <p class="text-secondary mt-2">Fetching current profile information...</p>
+  </div>
+
+  <!-- Error Connection Banner -->
+  <div *ngIf="errorMessage" class="alert alert-custom-danger border-0 p-3 mb-4 rounded-3 d-flex align-items-center shadow-sm" role="alert">
+    <i class="bi bi-exclamation-circle-fill fs-4 me-3 text-danger"></i>
+    <div class="small fw-semibold text-dark">{{ errorMessage }}</div>
+  </div>
+
+  <!-- Main Form Card -->
+  <div class="card border-0 shadow-lg p-4 bg-dark-card" *ngIf="!isLoading">
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" novalidate>
+      
+      <!-- Profile Image Preview Section (Top) -->
+      <div class="d-flex flex-column align-items-center mb-4">
+        <div class="form-avatar-container mb-2 border border-3 border-secondary border-opacity-10 rounded-circle overflow-hidden bg-light shadow-sm">
+          <img [src]="employeeForm.get('profileImage')?.value || 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=150&h=150&fit=crop'" 
+               alt="Avatar Preview" 
+               class="form-avatar-img"
+               onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=' + encodeURIComponent(employeeForm.get('employeeName')?.value || 'New')">
+        </div>
+        <span class="text-secondary small fw-medium">Live Profile Image Preview</span>
+      </div>
+
+      <div class="row g-3">
+        <!-- Row 1 Col 1: Full Name -->
+        <div class="col-md-6">
+          <div class="form-floating mb-1">
+            <input type="text" 
+                   id="employeeName"
+                   class="form-control text-dark border-0 bg-dark-input" 
+                   [class.is-invalid]="isControlInvalid('employeeName')"
+                   placeholder="John Doe" 
+                   formControlName="employeeName">
+            <label for="employeeName" class="text-secondary">Full Name</label>
+          </div>
+          <!-- Validation Warnings -->
+          <div class="invalid-feedback-custom" *ngIf="isControlInvalid('employeeName')">
+            <span *ngIf="employeeForm.get('employeeName')?.errors?.['required']">
+              <i class="bi bi-x-circle me-1"></i>Employee Name is required.
+            </span>
+            <span *ngIf="employeeForm.get('employeeName')?.errors?.['minlength']">
+              <i class="bi bi-x-circle me-1"></i>Name must be at least 3 characters.
+            </span>
+          </div>
+        </div>
+
+        <!-- Row 1 Col 2: Department Selection -->
+        <div class="col-md-6">
+          <div class="form-floating mb-1">
+            <select id="department"
+                    class="form-select text-dark border-0 bg-dark-input" 
+                    [class.is-invalid]="isControlInvalid('department')"
+                    formControlName="department">
+              <option value="" disabled selected>Select a Department</option>
+              <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+            </select>
+            <label for="department" class="text-secondary">Department</label>
+          </div>
+          <div class="invalid-feedback-custom" *ngIf="isControlInvalid('department')">
+            <span><i class="bi bi-x-circle me-1"></i>Please select a department.</span>
+          </div>
+        </div>
+
+        <!-- Row 2 Col 1: Designation -->
+        <div class="col-md-6">
+          <div class="form-floating mb-1">
+            <input type="text" 
+                   id="designation"
+                   class="form-control text-dark border-0 bg-dark-input" 
+                   [class.is-invalid]="isControlInvalid('designation')"
+                   placeholder="Software Architect" 
+                   formControlName="designation">
+            <label for="designation" class="text-secondary">Designation / Role</label>
+          </div>
+          <div class="invalid-feedback-custom" *ngIf="isControlInvalid('designation')">
+            <span><i class="bi bi-x-circle me-1"></i>Designation is required.</span>
+          </div>
+        </div>
+
+        <!-- Row 2 Col 2: Salary -->
+        <div class="col-md-6">
+          <div class="form-floating mb-1">
+            <input type="number" 
+                   id="salary"
+                   class="form-control text-dark border-0 bg-dark-input" 
+                   [class.is-invalid]="isControlInvalid('salary')"
+                   placeholder="50000" 
+                   formControlName="salary">
+            <label for="salary" class="text-secondary">Monthly Salary (INR)</label>
+          </div>
+          <div class="invalid-feedback-custom" *ngIf="isControlInvalid('salary')">
+            <span *ngIf="employeeForm.get('salary')?.errors?.['required']">
+              <i class="bi bi-x-circle me-1"></i>Salary amount is required.
+            </span>
+            <span *ngIf="employeeForm.get('salary')?.errors?.['min']">
+              <i class="bi bi-x-circle me-1"></i>Salary must be at least ₹1,000.
+            </span>
+          </div>
+        </div>
+
+        <!-- Row 3 Col 1: Age -->
+        <div class="col-md-4">
+          <div class="form-floating mb-1">
+            <input type="number" 
+                   id="age"
+                   class="form-control text-dark border-0 bg-dark-input" 
+                   [class.is-invalid]="isControlInvalid('age')"
+                   placeholder="25" 
+                   formControlName="age">
+            <label for="age" class="text-secondary">Age</label>
+          </div>
+          <div class="invalid-feedback-custom" *ngIf="isControlInvalid('age')">
+            <span *ngIf="employeeForm.get('age')?.errors?.['required']">
+              <i class="bi bi-x-circle me-1"></i>Age is required.
+            </span>
+            <span *ngIf="employeeForm.get('age')?.errors?.['min'] || employeeForm.get('age')?.errors?.['max']">
+              <i class="bi bi-x-circle me-1"></i>Age must be between 18 and 65 years.
+            </span>
+          </div>
+        </div>
+
+        <!-- Row 3 Col 2: Gender Selection -->
+        <div class="col-md-8 d-flex align-items-center">
+          <div class="w-100 p-2.5 rounded-3 bg-dark-input-raw d-flex align-items-center gap-4 border border-secondary border-opacity-10">
+            <span class="text-secondary small fw-semibold">Gender:</span>
+            <div class="d-flex gap-3">
+              <div class="form-check form-check-inline" *ngFor="let g of genders">
+                <input class="form-check-input text-primary cursor-pointer" 
+                       type="radio" 
+                       [id]="'gender_' + g" 
+                       [value]="g" 
+                       formControlName="gender">
+                <label class="form-check-label text-dark cursor-pointer small fw-medium" [for]="'gender_' + g">{{ g }}</label>
+              </div>
+            </div>
+          </div>
+          <!-- Invisible Validator hook for styling check if touched -->
+          <div class="d-block w-100 invalid-feedback-custom mt-1 ms-2" *ngIf="isControlInvalid('gender')">
+            <span><i class="bi bi-x-circle me-1"></i>Please select a gender.</span>
+          </div>
+        </div>
+
+        <!-- Row 4 Col 1: Email Address -->
+        <div class="col-md-6">
+          <div class="form-floating mb-1">
+            <input type="email" 
+                   id="email"
+                   class="form-control text-dark border-0 bg-dark-input" 
+                   [class.is-invalid]="isControlInvalid('email')"
+                   placeholder="name@example.com" 
+                   formControlName="email">
+            <label for="email" class="text-secondary">Email Address</label>
+          </div>
+          <div class="invalid-feedback-custom" *ngIf="isControlInvalid('email')">
+            <span *ngIf="employeeForm.get('email')?.errors?.['required']">
+              <i class="bi bi-x-circle me-1"></i>Email address is required.
+            </span>
+            <span *ngIf="employeeForm.get('email')?.errors?.['email']">
+              <i class="bi bi-x-circle me-1"></i>Please enter a valid email format.
+            </span>
+          </div>
+        </div>
+
+        <!-- Row 4 Col 2: Phone Number -->
+        <div class="col-md-6">
+          <div class="form-floating mb-1">
+            <input type="tel" 
+                   id="phone"
+                   class="form-control text-dark border-0 bg-dark-input" 
+                   [class.is-invalid]="isControlInvalid('phone')"
+                   placeholder="9876543210" 
+                   formControlName="phone">
+            <label for="phone" class="text-secondary">Phone Number</label>
+          </div>
+          <div class="invalid-feedback-custom" *ngIf="isControlInvalid('phone')">
+            <span *ngIf="employeeForm.get('phone')?.errors?.['required']">
+              <i class="bi bi-x-circle me-1"></i>Phone number is required.
+            </span>
+            <span *ngIf="employeeForm.get('phone')?.errors?.['pattern']">
+              <i class="bi bi-x-circle me-1"></i>Must be exactly a 10-digit number.
+            </span>
+          </div>
+        </div>
+
+        <!-- Row 5: Profile Image URL -->
+        <div class="col-12">
+          <div class="form-floating mb-1">
+            <input type="url" 
+                   id="profileImage"
+                   class="form-control text-dark border-0 bg-dark-input" 
+                   placeholder="https://example.com/pic.jpg" 
+                   formControlName="profileImage">
+            <label for="profileImage" class="text-secondary">Profile Image URL (Optional)</label>
+          </div>
+          <div class="form-text text-secondary small mt-1 ms-2">
+            Tip: Paste any public image URL (like Unsplash). If left empty, a neat letter avatar will generate automatically!
+          </div>
+        </div>
+      </div>
+
+      <hr class="border-secondary border-opacity-10 my-4">
+
+      <!-- Form Action Buttons -->
+      <div class="d-flex justify-content-end gap-3">
+        <!-- Cancel button navigation back to dashboard -->
+        <a routerLink="/" class="btn btn-dark-slate px-4 py-2.5 fw-semibold shadow-sm">
+          Cancel
+        </a>
+        
+        <!-- Submit Button -->
+        <button type="submit" 
+                class="btn px-4 py-2.5 fw-semibold shadow-sm d-flex align-items-center gap-2"
+                [class.btn-gradient-warning]="isEditMode"
+                [class.btn-gradient-primary]="!isEditMode"
+                [disabled]="isSaving">
+          <span *ngIf="isSaving" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <i *ngIf="!isSaving" class="bi" [ngClass]="isEditMode ? 'bi-check2-circle' : 'bi-person-plus-fill'"></i>
+          {{ isSaving ? 'Saving Records...' : (isEditMode ? 'Save Changes' : 'Register Profile') }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

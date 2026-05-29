@@ -1,0 +1,52 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "employeeName": "Swayam Gupta",
+      "department": "Engineering",
+      "designation": "Full Stack Developer",
+      "salary": 95000,
+      "age": 24,
+      "gender": "Male",
+      "email": "swayam.gupta@wipro.com",
+      "phone": "9876543210",
+      "profileImage": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&h=150&fit=crop&crop=face&q=80"
+    },
+    {
+      "id": 2,
+      "employeeName": "Ananya Sharma",
+      "department": "HR",
+      "designation": "Talent Acquisition Lead",
+      "salary": 72000,
+      "age": 28,
+      "gender": "Female",
+      "email": "ananya.sharma@wipro.com",
+      "phone": "8765432109",
+      "profileImage": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face&q=80"
+    },
+    {
+      "id": 3,
+      "employeeName": "Vikram Rathore",
+      "department": "Product Management",
+      "designation": "Director of Product",
+      "salary": 125000,
+      "age": 35,
+      "gender": "Male",
+      "email": "vikram.rathore@wipro.com",
+      "phone": "7654321098",
+      "profileImage": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face&q=80"
+    },
+    {
+      "id": 4,
+      "employeeName": "Priya Patel",
+      "department": "Engineering",
+      "designation": "QA Engineer",
+      "salary": 58000,
+      "age": 26,
+      "gender": "Female",
+      "email": "priya.patel@wipro.com",
+      "phone": "6543210987",
+      "profileImage": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face&q=80"
+    }
+  ]
+}

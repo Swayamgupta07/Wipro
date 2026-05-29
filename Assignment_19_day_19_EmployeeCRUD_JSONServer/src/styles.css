@@ -1,0 +1,618 @@
+/* ==========================================================================
+   MINIMALIST LIGHT SYSTEM (Stripe-Style Dashboard)
+   Created for Assignment 19 - Clean, Spacious, Professional
+   ========================================================================== */
+
+/* --- Custom Variables & Styling Tokens --- */
+:root {
+  --bg-page: #f8fafc;        /* Soft slate white */
+  --bg-card: #ffffff;        /* Crisp pure white */
+  --bg-input: #ffffff;
+  --bg-navbar: #ffffff;
+  
+  --text-main: #0f172a;      /* Dark slate */
+  --text-muted: #475569;     /* Slate grey */
+  --text-light: #64748b;
+  
+  --border-light: #e2e8f0;   /* Ultra-fine grey */
+  --border-focus: #6366f1;   /* Soft indigo */
+  
+  --primary: #4f46e5;        /* Deep Iris/Indigo */
+  --primary-soft: #ecf0ff;
+  --primary-light: #818cf8;
+  
+  --success: #10b981;
+  --success-soft: #ecfdf5;
+  --success-text: #047857;
+  
+  --warning: #f59e0b;
+  --warning-soft: #fffbeb;
+  --warning-text: #b45309;
+  
+  --danger: #ef4444;
+  --danger-soft: #fff1f2;
+  --danger-text: #b91c1c;
+
+  /* Custom Department Pastel Colors */
+  --dept-eng-bg: #ecfdf5;
+  --dept-eng-text: #047857;
+  --dept-eng-border: #d1fae5;
+  
+  --dept-hr-bg: #fff1f2;
+  --dept-hr-text: #be123c;
+  --dept-hr-border: #ffe4e6;
+  
+  --dept-prod-bg: #f5f3ff;
+  --dept-prod-text: #6d28d9;
+  --dept-prod-border: #ede9fe;
+  
+  --dept-mkt-bg: #fffbeb;
+  --dept-mkt-text: #b45309;
+  --dept-mkt-border: #fef3c7;
+  
+  --dept-ops-bg: #eff6ff;
+  --dept-ops-text: #1d4ed8;
+  --dept-ops-border: #dbeafe;
+
+  /* Subtle Left Accent Salary Stripes */
+  --salary-high: #f59e0b;    /* Gold */
+  --salary-mid: #6366f1;     /* Indigo */
+  --salary-low: #94a3b8;     /* Slate Steel */
+  
+  --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+}
+
+/* --- Global Scrollbar Styling --- */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* --- Core Styles --- */
+body {
+  background-color: var(--bg-page) !important;
+  color: var(--text-main) !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Keyframe Animations --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* --- Navigation & Layout --- */
+.bg-dark-navbar {
+  background-color: var(--bg-navbar) !important;
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border-light) !important;
+}
+
+.navbar-brand {
+  letter-spacing: -0.5px;
+}
+
+.logo-circle {
+  width: 36px;
+  height: 36px;
+}
+
+.bg-primary-gradient {
+  background: linear-gradient(135deg, var(--primary), #6366f1);
+}
+
+.nav-link {
+  color: var(--text-muted) !important;
+  transition: var(--transition-smooth);
+}
+.nav-link:hover {
+  color: var(--primary) !important;
+  background-color: var(--primary-soft);
+}
+.nav-link.active {
+  color: var(--primary) !important;
+  background-color: var(--primary-soft) !important;
+  font-weight: 600;
+  border: 1px solid rgba(79, 70, 229, 0.1);
+}
+
+.main-content-wrapper {
+  min-height: calc(100vh - 200px);
+}
+
+/* --- Button Styling --- */
+.btn-gradient-primary {
+  background: var(--primary);
+  color: white;
+  border: 1px solid transparent;
+  transition: var(--transition-smooth);
+}
+.btn-gradient-primary:hover {
+  background: #4338ca;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+}
+
+.btn-gradient-warning {
+  background: var(--warning);
+  color: white;
+  border: none;
+  transition: var(--transition-smooth);
+}
+.btn-gradient-warning:hover {
+  background: #d97706;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2);
+}
+
+.btn-gradient-danger {
+  background: var(--danger);
+  color: white;
+  border: none;
+  transition: var(--transition-smooth);
+}
+.btn-gradient-danger:hover {
+  background: #dc2626;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2);
+}
+
+.btn-gradient-secondary {
+  background: #ffffff;
+  color: var(--text-main);
+  border: 1px solid var(--border-light);
+  transition: var(--transition-smooth);
+}
+.btn-gradient-secondary:hover {
+  background: #f1f5f9;
+  color: var(--text-main);
+}
+
+.btn-dark-slate {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  color: var(--text-muted);
+  transition: var(--transition-smooth);
+}
+.btn-dark-slate:hover {
+  background: #f1f5f9;
+  color: var(--text-main);
+}
+
+.btn-dark-slate-btn {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  color: var(--text-muted);
+  transition: var(--transition-smooth);
+}
+.btn-dark-slate-btn:hover {
+  background: #f8fafc;
+  color: var(--text-main);
+}
+
+/* --- Dashboard Statistics Panels --- */
+.stat-card {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm) !important;
+  transition: var(--transition-smooth);
+}
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md) !important;
+}
+
+.bg-primary-soft { background-color: var(--primary-soft); }
+.bg-warning-soft { background-color: var(--warning-soft); }
+.bg-info-soft    { background-color: var(--dept-ops-bg); }
+.bg-success-soft { background-color: var(--success-soft); }
+
+.stat-card .icon-shape {
+  border-radius: 8px;
+}
+
+.text-shadow-green {
+  color: var(--success-text) !important;
+  font-weight: 700;
+}
+
+/* --- Central Control Panel --- */
+.control-bar {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.search-input-group {
+  background-color: #f1f5f9;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  transition: var(--transition-smooth);
+}
+.search-input-group:focus-within {
+  background-color: #ffffff;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+.search-input-group input {
+  color: var(--text-main) !important;
+}
+
+/* --- Employee Profile Cards --- */
+.employee-card {
+  background-color: var(--bg-card) !important;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+  border: 1px solid var(--border-light) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+.employee-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.employee-card-bg {
+  height: 52px;
+  background: #f1f5f9;
+  border-bottom: 1px solid var(--border-light);
+  opacity: 0.8;
+}
+
+.relative-top {
+  position: relative;
+  z-index: 2;
+}
+
+.profile-pic-container {
+  width: 86px;
+  height: 86px;
+  margin: -43px auto 10px auto;
+  border-radius: 50%;
+  padding: 3px;
+  background: var(--bg-card);
+}
+.profile-pic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bg-dark-slate {
+  background-color: #f1f5f9 !important;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+.tracking-wide {
+  letter-spacing: 0.05em;
+}
+
+/* --- Interactive Salary Directive (Left Stripe Highlight) --- */
+/* High Salary (Gold Accent) */
+tr.border-salary-high {
+  border-left: 4px solid var(--salary-high) !important;
+}
+div.border-salary-high {
+  border-left: 4px solid var(--salary-high) !important;
+}
+
+/* Mid Salary (Indigo Accent) */
+tr.border-salary-mid {
+  border-left: 4px solid var(--salary-mid) !important;
+}
+div.border-salary-mid {
+  border-left: 4px solid var(--salary-mid) !important;
+}
+
+/* Entry Salary (Slate/Steel Accent) */
+tr.border-salary-low {
+  border-left: 4px solid var(--salary-low) !important;
+}
+div.border-salary-low {
+  border-left: 4px solid var(--salary-low) !important;
+}
+
+/* --- Modern Spacious Spreadsheet Table View --- */
+.table-responsive {
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.table {
+  background-color: var(--bg-card) !important;
+}
+
+.table thead tr th {
+  background-color: #f8fafc !important;
+  color: var(--text-muted) !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  padding: 1.1rem 1.25rem !important; /* Spacious Padding */
+  border-bottom: 1px solid var(--border-light) !important;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--border-light) !important;
+  transition: var(--transition-smooth);
+}
+.table tbody tr:hover {
+  background-color: #f8fafc !important;
+}
+
+.table tbody tr td {
+  padding: 1.25rem 1.25rem !important; /* Highly spacious padding to feel airy */
+  color: var(--text-muted) !important;
+  font-size: 0.875rem;
+}
+
+/* --- Spacious & Beautiful Action Buttons Column --- */
+.table td .btn-group {
+  display: inline-flex;
+  gap: 8px !important; /* Increase gap between icons for a spacious look */
+}
+
+/* Minimalist Circular Icon Action Buttons */
+.btn-dark-slate-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50% !important; /* Perfect circle icons */
+  padding: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent !important;
+  border: 1px solid var(--border-light) !important;
+  transition: var(--transition-smooth) !important;
+}
+
+/* Hover highlights for actions: Spacious & Colorful yet Minimalist */
+.btn-dark-slate-btn.text-white:hover {
+  background-color: var(--primary-soft) !important;
+  color: var(--primary) !important;
+  border-color: rgba(79, 70, 229, 0.2) !important;
+  transform: scale(1.05);
+}
+
+.btn-dark-slate-btn.text-warning:hover {
+  background-color: var(--warning-soft) !important;
+  color: var(--warning-text) !important;
+  border-color: rgba(245, 158, 11, 0.2) !important;
+  transform: scale(1.05);
+}
+
+.btn-dark-slate-btn.text-danger:hover {
+  background-color: var(--danger-soft) !important;
+  color: var(--danger-text) !important;
+  border-color: rgba(239, 68, 68, 0.2) !important;
+  transform: scale(1.05);
+}
+
+/* --- Department Pastels Pill Tags --- */
+.badge {
+  font-weight: 500 !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.2px;
+  padding: 0.45rem 0.75rem !important;
+  border-radius: 6px !important;
+  border-width: 1px;
+  border-style: solid;
+}
+
+/* Loop and bind department specific pastels */
+.badge:contains("Engineering"),
+.badge:has(text),
+.bg-dark-slate {
+  background-color: #f1f5f9;
+  color: var(--text-muted);
+}
+
+/* Precise styling targets for department pill badges */
+.badge.bg-dark-slate {
+  background-color: #f1f5f9 !important;
+  color: var(--text-muted) !important;
+  border: 1px solid var(--border-light) !important;
+}
+
+/* We will inject specific styling classes in HTML to map pastel backgrounds */
+.badge-dept-eng {
+  background-color: var(--dept-eng-bg) !important;
+  color: var(--dept-eng-text) !important;
+  border-color: var(--dept-eng-border) !important;
+}
+.badge-dept-hr {
+  background-color: var(--dept-hr-bg) !important;
+  color: var(--dept-hr-text) !important;
+  border-color: var(--dept-hr-border) !important;
+}
+.badge-dept-prod {
+  background-color: var(--dept-prod-bg) !important;
+  color: var(--dept-prod-text) !important;
+  border-color: var(--dept-prod-border) !important;
+}
+.badge-dept-mkt {
+  background-color: var(--dept-mkt-bg) !important;
+  color: var(--dept-mkt-text) !important;
+  border-color: var(--dept-mkt-border) !important;
+}
+.badge-dept-ops {
+  background-color: var(--dept-ops-bg) !important;
+  color: var(--dept-ops-text) !important;
+  border-color: var(--dept-ops-border) !important;
+}
+
+/* --- Reactive Forms Page --- */
+.bg-dark-card {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: 14px;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.bg-dark-input {
+  background-color: var(--bg-input) !important;
+  color: var(--text-main) !important;
+  border: 1px solid #cbd5e1 !important;
+  transition: var(--transition-smooth) !important;
+}
+.bg-dark-input:focus {
+  background-color: var(--bg-input) !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1) !important;
+  color: var(--text-main) !important;
+}
+
+.bg-dark-input-raw {
+  background-color: #f8fafc !important;
+  border: 1px solid #cbd5e1;
+}
+
+/* Float Label Form customization */
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select ~ label {
+  color: var(--primary) !important;
+  opacity: 0.8;
+}
+
+.form-avatar-container {
+  width: 90px;
+  height: 90px;
+}
+.form-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.invalid-feedback-custom {
+  color: var(--danger-text);
+  font-size: 0.775rem;
+  margin-top: 4px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.is-invalid {
+  border-color: var(--danger) !important;
+}
+.is-invalid:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+/* --- Detailed Profile Page --- */
+.relative-top-minus {
+  position: relative;
+  z-index: 2;
+  margin-top: -24px;
+}
+
+.profile-banner-bg {
+  height: 100px;
+  background: #f1f5f9;
+  border-bottom: 1px solid var(--border-light);
+}
+.profile-banner-bg.border-salary-high {
+  background: var(--warning-soft);
+  border-bottom: 2px solid var(--salary-high);
+}
+.profile-banner-bg.border-salary-mid {
+  background: var(--primary-soft);
+  border-bottom: 2px solid var(--salary-mid);
+}
+.profile-banner-bg.border-salary-low {
+  background: #f1f5f9;
+  border-bottom: 2px solid var(--salary-low);
+}
+
+.details-avatar-container {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  padding: 3px;
+  background: var(--bg-card);
+}
+.details-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.hover-text-primary {
+  transition: var(--transition-smooth);
+}
+.hover-text-primary:hover {
+  color: var(--primary) !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* --- Empty state & fallbacks --- */
+.empty-card {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.alert-custom-danger {
+  background-color: var(--danger-soft) !important;
+  border: 1px solid rgba(239, 68, 68, 0.1) !important;
+  color: var(--danger-text) !important;
+}
+
+.max-width-800 { max-width: 800px; }
+.max-width-900 { max-width: 900px; }
+.max-width-500 { max-width: 500px; }
+.max-width-200 { max-width: 200px; }
+
+/* --- Mobile Responsiveness Helpers --- */
+@media (max-width: 576px) {
+  .w-100-mobile {
+    width: 100%;
+  }
+  .flex-fill-mobile {
+    flex: 1 1 auto;
+  }
+  .details-avatar-container {
+    width: 90px;
+    height: 90px;
+  }
+}

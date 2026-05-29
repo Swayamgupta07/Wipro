@@ -1,0 +1,60 @@
+<!-- Premium Global Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark-navbar border-bottom border-secondary border-opacity-10 py-3 shadow-sm sticky-top">
+  <div class="container">
+    
+    <!-- Brand Logo and Name -->
+    <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-4 tracking-tight" routerLink="/">
+      <div class="logo-circle bg-primary-gradient d-flex align-items-center justify-content-center rounded-3 shadow-sm">
+        <i class="bi bi-briefcase-fill text-white fs-5"></i>
+      </div>
+      <span class="text-white">Core<span class="text-primary">Portal</span></span>
+    </a>
+
+    <!-- Mobile Toggle Button -->
+    <button class="navbar-toggler border-0 p-2 text-secondary" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#navbarNav" 
+            aria-controls="navbarNav" 
+            aria-expanded="false" 
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navigation Menu Items -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto gap-2 mt-3 mt-lg-0">
+        <li class="nav-item">
+          <!-- routerLinkActive automatically applies the 'active' class when the path matches -->
+          <a class="nav-link px-3 py-2 rounded-2 fw-medium d-flex align-items-center gap-2" 
+             routerLink="/" 
+             routerLinkActive="active" 
+             [routerLinkActiveOptions]="{ exact: true }">
+            <i class="bi bi-grid-fill small"></i>Directory Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3 py-2 rounded-2 fw-medium d-flex align-items-center gap-2" 
+             routerLink="/add" 
+             routerLinkActive="active">
+            <i class="bi bi-person-plus-fill small"></i>Register Employee
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+<!-- Main Router Content Area -->
+<main class="main-content-wrapper">
+  <router-outlet></router-outlet>
+</main>
+
+<!-- Footer Section -->
+<footer class="footer py-4 mt-5 bg-dark-navbar border-top border-secondary border-opacity-10 text-center text-secondary small">
+  <div class="container">
+    <p class="mb-1 fw-medium text-white-50">CorePortal • Advanced Employee Management System</p>
+    <p class="mb-0">Powered by Angular 21, JSON Server, and Bootstrap 5. Created for Assignment 19.</p>
+  </div>
+</footer>
