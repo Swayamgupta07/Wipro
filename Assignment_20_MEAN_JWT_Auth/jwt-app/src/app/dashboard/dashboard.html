@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-md-8 mx-auto">
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">Dashboard</h4>
+        <button class="btn btn-light btn-sm" (click)="logout()">Logout</button>
+      </div>
+      <div class="card-body">
+
+        <div *ngIf="error" class="alert alert-danger">
+          {{ error }}
+        </div>
+
+        <div *ngIf="profileData">
+          <h5 class="card-title">Welcome, {{ profileData.user.name }}!</h5>
+          <hr>
+          <p><strong>Email:</strong> {{ profileData.user.email }}</p>
+          <p><strong>User ID:</strong> {{ profileData.user.id }}</p>
+
+          <div class="alert alert-success mt-4">
+            <h6 class="alert-heading">Backend Response:</h6>
+            <p class="mb-0">{{ profileData.message }}</p>
+            <small class="text-muted">Server Time: {{ profileData.serverTime | date:'medium' }}</small>
+          </div>
+        </div>
+
+        <div *ngIf="!profileData && !error" class="text-center p-4">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="mt-2">Loading profile data...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
